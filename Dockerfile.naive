@@ -1,0 +1,28 @@
+# Select base image from which we build the container
+FROM python:3.11.3-slim-buster
+
+# Set environment variables both at build and at run time.
+# In this case, we make sure Python output is visible in Docker logs
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Copy application code into the container
+COPY . /app
+
+# Set working directory from now on (like cd ...)
+WORKDIR /app
+
+# Install Poetry
+RUN pip install poetry
+
+# Install dependencies
+RUN poetry install --no-root
+
+# Expose the port the app runs on
+EXPOSE 8000
+
+# 6. Set default command when container starts
+# In this case we run our training script
+CMD ["poetry", "run", "uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
