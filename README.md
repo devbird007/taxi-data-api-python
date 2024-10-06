@@ -28,3 +28,9 @@ docker run -p 8090:8000 taxi-data-api-python:multi-stage-build
 ```
 
 The container serves on port `8000`. You may customize accordingly.
+
+
+To send a sample request testing the application:
+```
+make sample-request
+```
